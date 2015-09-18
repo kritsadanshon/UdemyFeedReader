@@ -2,17 +2,18 @@ package com.sprint3r.ronin.udemyfeedreader;
 
 import org.junit.Test;
 
-import org.json.JSONObject;
 import java.io.IOException;
 import org.json.JSONArray;
 import static org.junit.Assert.*;
 
 public class httpClientResponseTest {
 
-    httpClientResponse httpClientResponse;
+    private httpClientResponse httpClientResponse;
+    private JSONArray cardView;
 
     public httpClientResponseTest() throws IOException {
         httpClientResponse = new httpClientResponse();
+        cardView = (JSONArray) httpClientResponse.getJSONArrayForCardView();
     }
 
     @Test
@@ -21,9 +22,14 @@ public class httpClientResponseTest {
     }
 
     @Test
-    public void getTitleNameZeroIndexFromJsonArrayForCardView(){
-        JSONObject jsonObjectResults = httpClientResponse.getJSONArrayForCardView().getJSONObject(0);
-        assertEquals("Learn and Understand AngularJS", jsonObjectResults.get("title"));
+    public void lengthOfCardView(){
+        assertEquals(12, cardView.length());
+    }
+
+    @Test
+    public void checkTitleNameOfIndexOne(){
+        String TitleName = cardView.getJSONObject(1).getString("title");
+        assertEquals("Javascript: Understanding the Weird Parts", TitleName);
     }
 
     @Test

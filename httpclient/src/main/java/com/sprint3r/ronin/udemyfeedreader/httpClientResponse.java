@@ -14,8 +14,19 @@ public class httpClientResponse {
         jsonObject = httpclient.getResult();
     }
 
-    public JSONArray getJSONArrayForCardView(){
-        return jsonObject.getJSONArray("results");
+    public Object getJSONArrayForCardView(){
+        JSONObject cardView = new JSONObject();
+        JSONArray results = jsonObject.getJSONArray("results");
+        for (int index=0; index<results.length(); index++){
+            String dataJson = "{" +
+                    "\"title\" : \""+results.getJSONObject(index).get("title")+"\"," +
+                    "\"image_240x135\" : \""+results.getJSONObject(index).get("image_240x135")+"\","+
+                    "\"price\" : \""+results.getJSONObject(index).get("price")+"\","+
+                    "}";
+            JSONObject tempCardView = new JSONObject(dataJson);
+            cardView.append("cardView", tempCardView);
+        }
+        return cardView.get("cardView");
     }
 
     public String getNextUrl(){
