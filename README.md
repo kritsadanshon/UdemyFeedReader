@@ -1,2 +1,7 @@
-# Run Test httpClient Modul
-  $./gradlew :httpclient:test
+# Run UnitTest httpClient Module
+
+Unix
+>$./gradlew :httpclient:test
+
+Windows
+>gradlew :httpclient:test
