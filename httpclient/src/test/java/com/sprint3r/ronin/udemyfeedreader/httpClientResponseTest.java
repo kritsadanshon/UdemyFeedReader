@@ -33,6 +33,12 @@ public class httpClientResponseTest {
     }
 
     @Test
+    public void checkUrlOfIndexOne(){
+        String url = cardView.getJSONObject(1).getString("url");
+        assertEquals("https://www.udemy.com/understand-javascript/", url);
+    }
+
+    @Test
     public void getNextUrlTest(){
         assertEquals("https://www.udemy.com/api-2.0/courses?page=2", httpClientResponse.getNextUrl());
     }

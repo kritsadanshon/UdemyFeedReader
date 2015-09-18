@@ -8,9 +8,10 @@ public class httpClientResponse {
 
     private httpClientConnect httpclient;
     private JSONObject jsonObject;
+    final private String API_URL = "https://www.udemy.com";
 
     public httpClientResponse() throws IOException {
-        httpclient = new httpClientConnect("https://www.udemy.com/api-2.0/courses");
+        httpclient = new httpClientConnect(API_URL+"/api-2.0/courses");
         jsonObject = httpclient.getResult();
     }
 
@@ -22,6 +23,7 @@ public class httpClientResponse {
                     "\"title\" : \""+results.getJSONObject(index).get("title")+"\"," +
                     "\"image_240x135\" : \""+results.getJSONObject(index).get("image_240x135")+"\","+
                     "\"price\" : \""+results.getJSONObject(index).get("price")+"\","+
+                    "\"url\" : \""+API_URL+results.getJSONObject(index).get("url")+"\""+
                     "}";
             JSONObject tempCardView = new JSONObject(dataJson);
             cardView.append("cardView", tempCardView);
