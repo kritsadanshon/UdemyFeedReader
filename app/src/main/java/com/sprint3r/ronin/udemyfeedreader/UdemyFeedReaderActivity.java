@@ -6,21 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.widget.AbsListView;
-import android.widget.Toast;
-
-import java.io.IOException;
 
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 
+
 public class UdemyFeedReaderActivity extends AppCompatActivity {
 
-    LinearLayoutManager linearLayoutManager;
-    private MyRecyclerViewAdapter myRecyclerViewAdapter;
-    retrofitApi retrofit;
+    private LinearLayoutManager linearLayoutManager;
+    private RecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +24,17 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RecyclerView myRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
 
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        myRecyclerViewAdapter = new MyRecyclerViewAdapter(this);
-        myRecyclerView.setAdapter(myRecyclerViewAdapter);
-        myRecyclerView.setLayoutManager(linearLayoutManager);
+        recyclerViewAdapter = new RecyclerViewAdapter(this);
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
-        try {
-            prepareItems();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        prepareItems();
     }
 
-    private void prepareItems() throws IOException {
+    private void prepareItems() {
         retrofitApi retrofit;
         retrofit = new retrofitApi();
         Call<CoursesDetail> feed = retrofit.getData();
@@ -56,8 +47,8 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
                 for (Integer item = 0; item < feedUdemy.results.size(); item++) {
                     String courseTitle = "title";
                     String courseUrl = "url";
-                    myRecyclerViewAdapter.add(
-                            myRecyclerViewAdapter.getItemCount(),
+                    recyclerViewAdapter.add(
+                            recyclerViewAdapter.getItemCount(),
                             feedUdemy.results.get(item).getAsJsonObject().get(courseTitle).getAsString(),
                             feedUdemy.results.get(item).getAsJsonObject().get(courseUrl).getAsString()
                     );

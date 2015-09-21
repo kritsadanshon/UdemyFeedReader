@@ -10,15 +10,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends
-        RecyclerView.Adapter<MyRecyclerViewAdapter.ItemHolder> {
+public class RecyclerViewAdapter extends
+        RecyclerView.Adapter<RecyclerViewAdapter.ItemHolder> {
 
     private List<String> itemsName;
     private List<String> itemsValue;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public MyRecyclerViewAdapter(Context context){
+    public RecyclerViewAdapter(Context context){
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         itemsName = new ArrayList<String>();
@@ -26,13 +26,13 @@ public class MyRecyclerViewAdapter extends
     }
 
     @Override
-    public MyRecyclerViewAdapter.ItemHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
+    public RecyclerViewAdapter.ItemHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         CardView itemCardView = (CardView)layoutInflater.inflate(R.layout.layout_cardview, viewGroup, false);
         return new ItemHolder(itemCardView, this);
     }
 
     @Override
-    public void onBindViewHolder(MyRecyclerViewAdapter.ItemHolder itemHolder, int position) {
+    public void onBindViewHolder(RecyclerViewAdapter.ItemHolder itemHolder, int position) {
         itemHolder.setItemCourseTitle(itemsName.get(position));
         itemHolder.setItemCourseUrl(itemsValue.get(position));
     }
@@ -50,12 +50,12 @@ public class MyRecyclerViewAdapter extends
 
     public static class ItemHolder extends RecyclerView.ViewHolder{
 
-        private MyRecyclerViewAdapter parent;
+        private RecyclerViewAdapter parent;
         private CardView cardView;
         TextView textCourseTitle;
         TextView textCourseUrl;
 
-        public ItemHolder(CardView cView, MyRecyclerViewAdapter parent) {
+        public ItemHolder(CardView cView, RecyclerViewAdapter parent) {
             super(cView);
             cardView = cView;
             this.parent = parent;
