@@ -11,11 +11,11 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 
-
 public class UdemyFeedReaderActivity extends AppCompatActivity {
 
     private LinearLayoutManager linearLayoutManager;
     private RecyclerViewAdapter recyclerViewAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+        recyclerView = (RecyclerView) findViewById(R.id.course_feed_recyclerview);
 
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewAdapter = new RecyclerViewAdapter(this);
@@ -43,16 +43,7 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<CoursesDetail> response) {
                 CoursesDetail feedUdemy = response.body();
-
-                for (Integer item = 0; item < feedUdemy.results.size(); item++) {
-                    String courseTitle = "title";
-                    String courseUrl = "url";
-                    recyclerViewAdapter.add(
-                            recyclerViewAdapter.getItemCount(),
-                            feedUdemy.results.get(item).getAsJsonObject().get(courseTitle).getAsString(),
-                            feedUdemy.results.get(item).getAsJsonObject().get(courseUrl).getAsString()
-                    );
-                }
+                recyclerViewAdapter.add(feedUdemy.results);
             }
 
             @Override
@@ -61,8 +52,5 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 
 }

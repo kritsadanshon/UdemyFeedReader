@@ -7,22 +7,22 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.JsonArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends
         RecyclerView.Adapter<RecyclerViewAdapter.ItemHolder> {
 
-    private List<String> itemsName;
-    private List<String> itemsValue;
+    private List<String> itemsTitle;
+    private List<String> itemsUrl;
     private LayoutInflater layoutInflater;
-    private Context context;
 
-    public RecyclerViewAdapter(Context context){
-        this.context = context;
+    public RecyclerViewAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
-        itemsName = new ArrayList<String>();
-        itemsValue = new ArrayList<String>();
+        itemsTitle = new ArrayList();
+        itemsUrl = new ArrayList();
     }
 
     @Override
@@ -33,22 +33,28 @@ public class RecyclerViewAdapter extends
 
     @Override
     public void onBindViewHolder(RecyclerViewAdapter.ItemHolder itemHolder, int position) {
-        itemHolder.setItemCourseTitle(itemsName.get(position));
-        itemHolder.setItemCourseUrl(itemsValue.get(position));
+        itemHolder.setItemCourseTitle(itemsTitle.get(position));
+        itemHolder.setItemCourseUrl(itemsUrl.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return itemsName.size();
+        return itemsTitle.size();
     }
 
-    public void add(int location, String iName, String iURL){
-        itemsName.add(location, iName);
-        itemsValue.add(location, iURL);
-        notifyItemInserted(location);
+    public void add(JsonArray results) {
+        String courseTitle = "title";
+        String courseUrl = "url";
+        int lastCardView = results.size() + itemsTitle.size();
+
+        for (int index = itemsTitle.size() ; index < lastCardView; index++) {
+            itemsTitle.add(index, results.get(index).getAsJsonObject().get(courseTitle).getAsString());
+            itemsUrl.add(index, results.get(index).getAsJsonObject().get(courseUrl).getAsString());
+            notifyItemInserted(getItemCount());
+        }
     }
 
-    public static class ItemHolder extends RecyclerView.ViewHolder{
+    public static class ItemHolder extends RecyclerView.ViewHolder {
 
         private RecyclerViewAdapter parent;
         private CardView cardView;
