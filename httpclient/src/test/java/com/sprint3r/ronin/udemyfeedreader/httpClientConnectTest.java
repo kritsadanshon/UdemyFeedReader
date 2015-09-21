@@ -16,7 +16,7 @@ public class HttpClientConnectTest {
     @Test
     public void requestDataTestShouldReturnJsonData() throws IOException {
         String expected = "https://www.udemy.com/api-2.0/courses?page=2";
-        assertEquals(expected, HttpClientConnect.getResult().getString("next"));
+        assertEquals(expected, HttpClientConnect.getResult().get("next").getAsString());
     }
 
 }
