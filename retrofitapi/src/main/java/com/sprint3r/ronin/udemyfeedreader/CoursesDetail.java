@@ -2,7 +2,7 @@ package com.sprint3r.ronin.udemyfeedreader;
 
 import com.google.gson.JsonArray;
 
-public class udemyCourses {
+class CoursesDetail{
     public String next;
     public JsonArray results;
 }

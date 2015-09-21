@@ -1,13 +1,26 @@
 package com.sprint3r.ronin.udemyfeedreader;
 
+
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
+import android.widget.AbsListView;
+import android.widget.Toast;
+
+import java.io.IOException;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
 
 public class UdemyFeedReaderActivity extends AppCompatActivity {
+
+    LinearLayoutManager linearLayoutManager;
+    private MyRecyclerViewAdapter myRecyclerViewAdapter;
+    retrofitApi retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,13 +29,49 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        RecyclerView myRecyclerView = (RecyclerView) findViewById(R.id.myrecyclerview);
+
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        myRecyclerViewAdapter = new MyRecyclerViewAdapter(this);
+        myRecyclerView.setAdapter(myRecyclerViewAdapter);
+        myRecyclerView.setLayoutManager(linearLayoutManager);
+
+        try {
+            prepareItems();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void prepareItems() throws IOException {
+        retrofitApi retrofit;
+        retrofit = new retrofitApi();
+        Call<CoursesDetail> feed = retrofit.getData();
+
+        feed.enqueue(new Callback<CoursesDetail>() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onResponse(Response<CoursesDetail> response) {
+                CoursesDetail feedUdemy = response.body();
+
+                for (Integer item = 0; item < feedUdemy.results.size(); item++) {
+                    String courseTitle = "title";
+                    String courseUrl = "url";
+                    myRecyclerViewAdapter.add(
+                            myRecyclerViewAdapter.getItemCount(),
+                            feedUdemy.results.get(item).getAsJsonObject().get(courseTitle).getAsString(),
+                            feedUdemy.results.get(item).getAsJsonObject().get(courseUrl).getAsString()
+                    );
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
             }
         });
     }
+
+
+
+
 }
