@@ -5,18 +5,18 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-public class httpClientConnectTest {
+public class HttpClientConnectTest {
 
-    private httpClientConnect httpClientConnect;
+    private HttpClientConnect HttpClientConnect;
 
-    public httpClientConnectTest() throws Exception {
-        httpClientConnect = new httpClientConnect("https://www.udemy.com/api-2.0/courses");
+    public HttpClientConnectTest() throws Exception {
+        HttpClientConnect = new HttpClientConnect("https://www.udemy.com/api-2.0/courses");
     }
 
     @Test
     public void requestDataTestShouldReturnJsonData() throws IOException {
         String expected = "https://www.udemy.com/api-2.0/courses?page=2";
-        assertEquals(expected, httpClientConnect.getResult().getString("next"));
+        assertEquals(expected, HttpClientConnect.getResult().getString("next"));
     }
 
 }

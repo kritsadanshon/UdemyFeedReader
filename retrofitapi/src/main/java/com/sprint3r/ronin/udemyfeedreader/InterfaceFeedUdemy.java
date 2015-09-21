@@ -5,5 +5,5 @@ import retrofit.http.GET;
 
 public interface InterfaceFeedUdemy {
     @GET("/api-2.0/courses")
-    Call<udemyCourses> getFeed();
+    Call<UdemyCourses> getFeed();
 }

@@ -6,14 +6,14 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class retrofitApiTest {
+public class RetrofitApiTest {
 
-    private retrofitApi retrofitApi;
-    private udemyCourses feedUdemy;
+    private RetrofitApi RetrofitApi;
+    private UdemyCourses feedUdemy;
 
-    public retrofitApiTest() throws IOException {
-        retrofitApi = new retrofitApi();
-        feedUdemy = retrofitApi.getData();
+    public RetrofitApiTest() throws IOException {
+        RetrofitApi = new RetrofitApi();
+        feedUdemy = RetrofitApi.getData();
     }
 
     @Test

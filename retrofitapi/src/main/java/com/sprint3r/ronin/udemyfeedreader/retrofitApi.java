@@ -2,17 +2,16 @@ package com.sprint3r.ronin.udemyfeedreader;
 
 import java.io.IOException;
 
-import retrofit.Call;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class retrofitApi {
+public class RetrofitApi {
 
     final private String API_URL = "https://www.udemy.com";
-    private Response<udemyCourses> response;
+    private Response<UdemyCourses> response;
 
-    public retrofitApi() throws IOException {
+    public RetrofitApi() throws IOException {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -21,7 +20,7 @@ public class retrofitApi {
         response = service.getFeed().execute();
     }
 
-    public udemyCourses getData(){
+    public UdemyCourses getData(){
         return response.body();
     }
 

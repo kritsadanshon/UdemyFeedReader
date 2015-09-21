@@ -7,12 +7,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class httpClientConnect {
+public class HttpClientConnect {
 
     private HttpURLConnection urlConnection;
     private JSONObject jsonObj;
 
-    public httpClientConnect(String url) throws IOException{
+    public HttpClientConnect(String url) throws IOException{
         urlConnection = (HttpURLConnection) new URL(url).openConnection();
         urlConnection.setConnectTimeout(3000);
     }

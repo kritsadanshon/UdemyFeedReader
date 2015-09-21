@@ -4,13 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
 
-public class httpClientResponse {
+public class HttpClientResponse {
 
-    private httpClientConnect httpclient;
+    private HttpClientConnect httpclient;
     private JSONObject jsonObject;
 
-    public httpClientResponse() throws IOException {
-        httpclient = new httpClientConnect("https://www.udemy.com/api-2.0/courses");
+    public HttpClientResponse() throws IOException {
+        httpclient = new HttpClientConnect("https://www.udemy.com/api-2.0/courses");
         jsonObject = httpclient.getResult();
     }
 
