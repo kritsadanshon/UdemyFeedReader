@@ -1,25 +1,25 @@
 package com.sprint3r.ronin.udemyfeedreader;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 
 public class HttpClientResponse {
 
     private HttpClientConnect httpclient;
-    private JSONObject jsonObject;
+    private JsonObject jsonObject;
 
     public HttpClientResponse() throws IOException {
         httpclient = new HttpClientConnect("https://www.udemy.com/api-2.0/courses");
         jsonObject = httpclient.getResult();
     }
 
-    public JSONArray getJSONArrayForCardView(){
-        return jsonObject.getJSONArray("results");
+    public JsonArray getJSONArrayForCardView(){
+        return jsonObject.getAsJsonArray("results");
     }
 
     public String getNextUrl(){
-        return jsonObject.getString("next");
+        return jsonObject.get("next").getAsString();
     }
 
 }

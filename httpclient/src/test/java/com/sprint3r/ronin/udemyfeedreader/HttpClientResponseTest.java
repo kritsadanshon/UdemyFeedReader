@@ -1,10 +1,11 @@
 package com.sprint3r.ronin.udemyfeedreader;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import org.junit.Test;
 
-import org.json.JSONObject;
 import java.io.IOException;
-import org.json.JSONArray;
 import static org.junit.Assert.*;
 
 public class HttpClientResponseTest {
@@ -17,13 +18,13 @@ public class HttpClientResponseTest {
 
     @Test
     public void checkObjectJsonArray(){
-        assertEquals(JSONArray.class, HttpClientResponse.getJSONArrayForCardView().getClass());
+        assertEquals(JsonArray.class, HttpClientResponse.getJSONArrayForCardView().getClass());
     }
 
     @Test
     public void getTitleNameZeroIndexFromJsonArrayForCardView(){
-        JSONObject jsonObjectResults = HttpClientResponse.getJSONArrayForCardView().getJSONObject(0);
-        assertEquals("Learn and Understand AngularJS", jsonObjectResults.get("title"));
+        JsonObject jsonObjectResults = (JsonObject) HttpClientResponse.getJSONArrayForCardView().get(0).getAsJsonObject();
+        assertEquals("Learn and Understand AngularJS", jsonObjectResults.get("title").getAsString());
     }
 
     @Test
