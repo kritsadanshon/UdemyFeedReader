@@ -10,9 +10,9 @@ import retrofit.Response;
 
 import static org.junit.Assert.assertEquals;
 
-public class retrofitApiTest {
+public class RetrofitApiTest {
 
-    private retrofitApi retrofitApi;
+    private RetrofitApi retrofitApi;
     private CoursesDetail feedUdemy;
     private Call<CoursesDetail> feed;
 
@@ -20,7 +20,7 @@ public class retrofitApiTest {
     @Test
     public void testCallNextPageUrl() throws InterruptedException {
         final CountDownLatch ying = new CountDownLatch(1);
-        retrofitApi = new retrofitApi();
+        retrofitApi = new RetrofitApi();
         feed = retrofitApi.getData();
 
         feed.enqueue(new Callback<CoursesDetail>() {
@@ -44,7 +44,7 @@ public class retrofitApiTest {
     @Test
     public void testCallTitleResults() throws InterruptedException {
         final CountDownLatch ying = new CountDownLatch(1);
-        retrofitApi = new retrofitApi();
+        retrofitApi = new RetrofitApi();
         feed = retrofitApi.getData();
 
         feed.enqueue(new Callback<CoursesDetail>() {

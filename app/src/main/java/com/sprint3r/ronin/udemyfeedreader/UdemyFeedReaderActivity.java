@@ -2,10 +2,15 @@ package com.sprint3r.ronin.udemyfeedreader;
 
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+
+import com.google.gson.JsonArray;
+
+import java.io.IOException;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -21,6 +26,12 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_udemy_feed_reader);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -31,12 +42,13 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        prepareItems();
+        prepareItemsHTTP();
+        //prepareItemsRetrofit();
     }
 
-    private void prepareItems() {
-        retrofitApi retrofit;
-        retrofit = new retrofitApi();
+    private void prepareItemsRetrofit() {
+        RetrofitApi retrofit;
+        retrofit = new RetrofitApi();
         Call<CoursesDetail> feed = retrofit.getData();
 
         feed.enqueue(new Callback<CoursesDetail>() {
@@ -51,6 +63,17 @@ public class UdemyFeedReaderActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void prepareItemsHTTP() {
+        HttpClientResponse httpClientResponse = null;
+        try {
+            httpClientResponse = new HttpClientResponse();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JsonArray data = httpClientResponse.getJSONArrayForCardView();
+        recyclerViewAdapter.add(data);
     }
 
 }
