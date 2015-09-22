@@ -25,14 +25,12 @@
             android:scaleType="centerCrop"
             android:textSize="14dp" />
 
-        <TextView
-            android:id="@+id/course_url"
+        <ImageView
+            android:id="@+id/course_image"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#333333"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="5dp" />
+            android:layout_height="fill_parent"
+            android:scaleType="fitXY"
+            android:layout_margin="5dp" />
 
     </LinearLayout>
 
